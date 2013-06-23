@@ -63,9 +63,10 @@ body {
 				<h3 id="tableTitle"></h3>
 				<table id="displayTable" class="table table-bordered">
 					<tr>
-						<th>Company</th>
-						<th>Contact person</th>
+						<th>Company Name</th>
+						<th>Contact Person</th>
 						<th>Contact Number</th>
+						<th>Contact Email</th>
 					</tr>
 				</table>
 
@@ -73,14 +74,113 @@ body {
 			<div class="tab-pane" id="water"></div>
 		</div>
 	</div>
+	<hr>
+	@ 24Hour Apps 2013
 	</div>
 	<!-- container -->
 <script type="text/javascript">
   //Global list for sheet gid ,support till 99
   var GID_TABLE = {
-		    0 : 'od6', 
-		    1 : 'od7',
-		    2 : 'od4'
+		    0 : 'od6',
+			  1 : 'od7',
+			  2 : 'od4',
+			  3 : 'od5',
+			  4 : 'oda',
+			  5 : 'odb',
+			  6 : 'od8',
+			  7 : 'od9',
+			  8 : 'ocy',
+			  9 : 'ocz',
+			  10 : 'oqw',
+			  11 : 'ocx',
+			  12 : 'od2',
+			  13 : 'od3',
+			  14 : 'od0',
+			  15 : '0d1',
+			  16 : 'ocq',
+			  17 : 'ocr',
+			  18 : 'oco',
+			  19 : 'ocp',
+			  20 : 'ocu',
+			  21 : 'ocv',
+			  22 : 'ocs',
+			  23 : 'oct',
+			  24 : 'oci',
+			  25 : 'ocj',
+			  26 : 'ocg',
+			  27 : 'och',
+			  28 : 'ocm',
+			  29 : 'ocn',
+			  30 : 'ock',
+			  31 : 'ocl',
+			  32 : 'oe2',
+			  33 : 'oe3',
+			  34 : 'oe0',
+			  35 : 'oe1',
+			  36 : 'oe6',
+			  37 : 'oe7',
+			  38 : 'oe4',
+			  39 : 'oe5',
+			  40 : 'odu',
+			  41 : 'odv',
+			  42 : 'ods',
+			  43 : 'odt',
+			  44 : 'ody',
+			  45 : 'odz',
+			  46 : 'odw',
+			  47 : 'odx',
+			  48 : 'odm',
+			  49 : 'odn',
+			  50 : 'odk',
+			  51 : 'odl',
+			  52 : 'odq',
+			  53 : 'odr',
+			  54 : 'odo',
+			  55 : 'odp',
+			  56 : 'ode',
+			  57 : 'odf',
+			  58 : 'odc',
+			  59 : 'odd',
+			  60 : 'odi',
+			  61 : 'odj',
+			  62 : 'odg',
+			  63 : 'odh',
+			  64 : 'obe',
+			  65 : 'obf',
+			  66 : 'obc',
+			  67 : 'obd',
+			  68 : 'obi',
+			  69 : 'obj',
+			  70 : 'obg',
+			  71 : 'obh',
+			  72 : 'ob6',
+			  73 : 'ob7',
+			  74 : 'ob4',
+			  75 : 'ob5',
+			  76 : 'oba',
+			  77 : 'obb',
+			  78 : 'ob8',
+			  79 : 'ob9',
+			  80 : 'oay',
+			  81 : 'oaz',
+			  82 : 'oaw',
+			  83 : 'oax',
+			  84 : 'ob2',
+			  85 : 'ob3',
+			  86 : 'ob0',
+			  87 : 'ob1',
+			  88 : 'oaq',
+			  89 : 'oar',
+			  90 : 'oao',
+			  91 : 'oap',
+			  92 : 'oau',
+			  93 : 'oav',
+			  94 : 'oas',
+			  95 : 'oat',
+			  96 : 'oca',
+			  97 : 'ocb',
+			  98 : 'oc8',
+			  99 : 'oc9'
 		};
 	jQuery(document).ready(function() {
   	   //Hide page when page load
@@ -106,7 +206,8 @@ body {
 											populateTable(data);
 										});
 					});
-					$('#od6').click();
+					//Pre-selct first tab
+					$('#'+GID_TABLE[0]).click();
 					//Make tabs and table
 					$("#loadImage").hide();
 					$("#dispayInfo").show();
@@ -119,12 +220,17 @@ function populateTable(data){
 	//Remove existing rows
 	$("#displayTable").find("tr:not(:first)").remove();
 	$.each(data.feed.entry, function(i, entry) {
+		
+		console.log(entry);
+		
 		var newRowContent = "<tr><td>"
 				+ entry.gsx$company.$t + "</td><td>"
 				+ entry.gsx$contactperson.$t
 				+ "</td><td>"
 				+ entry.gsx$contactnumber.$t
-				+ "</td></tr></br>";
+				+ "</td><td>"
+				+ entry.gsx$mailid.$t
+				+ "</td></tr>";
 		$("#displayTable").append(newRowContent);
 	})
 }
