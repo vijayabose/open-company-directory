@@ -220,9 +220,6 @@ function populateTable(data){
 	//Remove existing rows
 	$("#displayTable").find("tr:not(:first)").remove();
 	$.each(data.feed.entry, function(i, entry) {
-		
-		console.log(entry);
-		
 		var newRowContent = "<tr><td>"
 				+ entry.gsx$company.$t + "</td><td>"
 				+ entry.gsx$contactperson.$t
