@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Company Directory</title>
+        <!--Call all css and js libraries first  -->
+        <link rel="stylesheet" type="text/css" href="css/style.css" media = "screen">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media = "screen">
+        <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'> 
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+        <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+      <style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+#loadImage {
+	position: absolute;
+	top: 50%;
+	left: 45%;
+	margin-left: -(Y/2 ) px;
+	margin-top: -(Y/2 ) px;
+}
+</style>   
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<!-- <script type="text/javascript" src="http://www.google.com/jsapi"></script> -->
+  </head>
+  <body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="brand" href="/">Company Directory</a>
+			</div>
+		</div>
+	</div>
+  <div class="container">
+  <img id="loadImage" style="display: none;" src="file:///Users/Vijay/Desktop/Project/image/loader.gif"></<img>
+  <div id="dispayInfo">
+		<!-- Main hero unit for a primary marketing message or call to action -->
+		<!-- <div class="hero-unit">
+        <h3>Employee Directory</h3>
+        <p>Handy list of employees in the organization.</p>
+      </div> -->
+		<div class="pagination">
+			<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+				<!-- <li><a href="#">Prev</a></li>
+				<li><a href="#fgafxns" class="tabLgink" gid="od6g" data-toggle="tafb">HVAC Fasns</a></li>
+				<li><a href="#fire" class="tabLink" gid="od7" data-toggle="tab">FireFighting</a></li>
+				<li><a href="#">Next</a></li> -->
+			</ul>
+		</div>
+		<div id="my-tab-content" class="tab-content">
+			<div class="tab-pane active" id="fans">
+				<h3 id="tableTitle"></h3>
+				<table id="displayTable" class="table table-bordered">
+					<tr>
+						<th>Company</th>
+						<th>Contact person</th>
+						<th>Contact Number</th>
+					</tr>
+				</table>
+
+			</div>
+			<div class="tab-pane" id="water"></div>
+		</div>
+	</div>
+	</div>
+	<!-- container -->
+<script type="text/javascript">
+  //Global list for sheet gid ,support till 99
+  var GID_TABLE = {
+		    0 : 'od6', 
+		    1 : 'od7',
+		    2 : 'od4'
+		};
+	jQuery(document).ready(function() {
+  	   //Hide page when page load
+		    $("#dispayInfo").hide();
+		    $("#loadImage").show();
+		    var key = '0AjGGBTWGiXngdEVIcmNpNXVpazNYbjhWQ0RvNzR2anc';
+		    var sheetList = new Array();
+				//Get list of sheets
+				$.getJSON("https://spreadsheets.google.com/feeds/worksheets/" + key
+						+ "/public/basic?alt=json-in-script&callback=?",
+						function(data) {
+					$.each(data.feed.entry, function(i, entry) {
+						 $('#tabs').append('<li><a href="#" id="'+GID_TABLE[i]+'" class="tabLink" gid="'+GID_TABLE[i]+'" data-toggle="tafb">'+entry.title.$t+'</a></li>');					
+					});
+					//Attaching click event
+					$(".tabLink").click(function(e) {
+								$("#tableTitle").text($(this).text());
+								var gid = $(this).attr("gid");
+								$.getJSON("https://spreadsheets.google.com/feeds/list/" + key
+										+ "/" + gid
+										+ "/public/values?alt=json-in-script&callback=?",
+										function(data) {
+											populateTable(data);
+										});
+					});
+					$('#od6').click();
+					//Make tabs and table
+					$("#loadImage").hide();
+					$("#dispayInfo").show();
+			});
+});
+/**
+ * Create rows with data from google spreadsheet
+ */
+function populateTable(data){
+	//Remove existing rows
+	$("#displayTable").find("tr:not(:first)").remove();
+	$.each(data.feed.entry, function(i, entry) {
+		var newRowContent = "<tr><td>"
+				+ entry.gsx$company.$t + "</td><td>"
+				+ entry.gsx$contactperson.$t
+				+ "</td><td>"
+				+ entry.gsx$contactnumber.$t
+				+ "</td></tr></br>";
+		$("#displayTable").append(newRowContent);
+	})
+}
+</script>
+</body>
+</html>
